@@ -20,3 +20,7 @@ jobs:
         repository: rayjosong/GoTrackDemoSystemBasic
         path: remote
         token: ${{ secrets.GOTRACK }}
+    - name: Show hidden file
+      run: |
+        cd remote
+        ls
