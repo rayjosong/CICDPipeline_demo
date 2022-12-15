@@ -31,4 +31,6 @@ jobs:
         go-version: 1.19.3 # optional
         # Path to the go.mod or go.work file.
     - name: Go installed
-      run: go version
+      run: |
+        go version
+        go test
