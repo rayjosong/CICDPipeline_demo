@@ -14,3 +14,9 @@ jobs:
       run: |
         ls
         echo hello there! 
+    - name: Get remote hidden repo
+      uses: actions/checkout@v2
+      with:
+        repository: rayjosong/GoTrackDemoSystemBasic
+        path: remote
+        token: ${{ secrets.GOTRACK }}
