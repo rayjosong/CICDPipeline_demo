@@ -17,7 +17,7 @@ jobs:
     - name: Get remote hidden repo
       uses: actions/checkout@v2
       with:
-        repository: rayjosong/GoTrackDemoSystemBasic
+        repository: lowkh2/GoTrackRemoteExample
         path: remote
         token: ${{ secrets.GOTRACK }}
     - name: Show hidden file
