@@ -1,8 +1,8 @@
-name: Demo Virtual Machine
-on: 
-  push: 
+name : Demo Virtual Machine
+on:
+  push:
     branches: [main]
-
+    
 jobs:
   build:
     name: Virtual Machine
@@ -11,35 +11,42 @@ jobs:
     - name: checkout my codes
       uses: actions/checkout@v2
     - name: Print and list out content
-      run: |
-        ls
-        echo hello there! 
+      run: echo Hello There!
     - name: Get remote hidden repo
       uses: actions/checkout@v2
       with:
-        repository: rayjosong/GoTrackDemoSystemBasic
-        path: remote
-        token: ${{ secrets.GH_TOKEN }}
-    - name: Show hidden file
+          repository: Lowkh2/GoTrackRemoteExample
+          path: remote
+          token: ${{ secrets.GOTRACK }}
+
+    - name: Show hidden File
       run: |
         cd remote
-        ls
+        ls   
+        cat mySecret.txt
     - name: Setup Go environment
       uses: actions/setup-go@v3.5.0
       with:
         # The Go version to download (if necessary) and use. Supports semver spec and ranges.
         go-version: 1.19.3 # optional
-        # Path to the go.mod or go.work file.
-    - name: Go installed
+ 
+    - name: Install dependencies for GO
       run: |
-        go version
-        go mod init 
+        go get github.com/franela/goblin 
+        go get github.com/tebeka/go2xunit 
         go test -v
-    - if: ${{ failure() }}
-
+        go test -v | go2xunit -output report.xml 
+        ls 
+        
+    - if: ${{ failure()}}
+      #uses: JasonEtco/create-an-issue@v2
+      #env:
+      #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #with:
+      #  filename: .github/template.md
       uses: dacbd/create-issue-action@main
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ github.token }}
         title: Action workflow failed.
         body: |
           ### Context
@@ -49,3 +56,9 @@ jobs:
           Job -           `${{ github.job }}`
           status -        `${{ job.status }}`
         assignees: Lowkh
+    
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"    
