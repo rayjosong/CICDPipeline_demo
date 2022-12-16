@@ -17,6 +17,19 @@ jobs:
       with:
         # The Go version to download (if necessary) and use. Supports semver spec and ranges.
         go-version: 1.19.3 # optional
+        
+    - name: Telegram Notify
+      uses: appleboy/telegram-action@master
+      with: 
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+            ${{ github.actor }} committed a new tag:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
   
     - if: ${{ failure()}}
       uses: dacbd/create-issue-action@main
