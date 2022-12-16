@@ -32,8 +32,9 @@ jobs:
  
     - name: Install dependencies for GO
       run: |
-        go install github.com/franela/goblin@latest
-        go install github.com/tebeka/go2xunit 
+        go mod init rayjosong/GoTrackDemoSystemBasic
+        go get github.com/franela/goblin@latest
+        go get github.com/tebeka/go2xunit 
         go test -v
         go test -v | go2xunit -output report.xml 
         ls 
