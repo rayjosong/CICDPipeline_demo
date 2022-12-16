@@ -56,7 +56,7 @@ jobs:
           Workflow name - `${{ github.workflow }}`
           Job -           `${{ github.job }}`
           status -        `${{ job.status }}`
-        assignees: Lowkh
+        assignees: rayjosong
     
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
