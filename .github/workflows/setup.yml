@@ -33,7 +33,7 @@ jobs:
     - name: Go installed
       run: |
         go version
-        go mod init
+        go mod init github.com/rayjosong/GoTrackDemoSystemBasic
         go test -v
     - if: ${{ failure() }}
       uses: JasonEtco/create-an-issue@v2.8.2
