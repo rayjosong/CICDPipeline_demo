@@ -39,7 +39,8 @@ jobs:
         go test -v | gotestsum --junitfile report.xml
         ls
         
-    - name: Telegram Notify
+    - if: ${{ success() }}
+      name: Telegram Notify
       uses: appleboy/telegram-action@master
       with: 
         to: ${{ secrets.TELEGRAM_TO }}
