@@ -34,8 +34,9 @@ jobs:
       run: |
         go mod init rayjosong/GoTrackDemoSystemBasic
         go get github.com/franela/goblin@latest
-        go get github.com/tebeka/go2xunit 
+        go install gotest.tools/gotestsum@latest
         go test -v
+        go test -v | gotestsum --junitfile report.xml
         ls
         
     - name: Telegram Notify
