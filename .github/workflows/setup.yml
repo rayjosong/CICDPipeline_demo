@@ -36,8 +36,16 @@ jobs:
         go mod init 
         go test -v
     - if: ${{ failure() }}
-      uses: JasonEtco/create-an-issue@v2.8.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      uses: dacbd/create-issue-action@main
       with:
-        filename: .github/template.md
+        token: ${{ secrets.GH_TOKEN }}
+        title: Action workflow failed.
+        body: |
+          ### Context
+          [Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+          Workflow name - `${{ github.workflow }}`
+          Job -           `${{ github.job }}`
+          status -        `${{ job.status }}`
+        assignees: Lowkh
