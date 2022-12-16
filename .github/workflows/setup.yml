@@ -36,8 +36,20 @@ jobs:
         go get github.com/franela/goblin@latest
         go get github.com/tebeka/go2xunit 
         go test -v
-        go test -v | go2xunit -output report.xml 
-        ls 
+        ls
+        
+    - name: Telegram Notify
+      uses: appleboy/telegram-action@0.0.3
+      with: 
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
         
     - if: ${{ failure()}}
       #uses: JasonEtco/create-an-issue@v2
@@ -63,3 +75,5 @@ jobs:
       if: always()
       with:
         junit_files: "report.xml"    
+        
+        
